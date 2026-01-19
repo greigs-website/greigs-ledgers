@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Typing from 'react-typing-effect';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import Modal from 'react-modal';
 import { Linkedin, Github, Twitter, Mail, MapPin } from 'lucide-react';
 import { BookOpen, Wallet, FileText, Monitor, BarChart3, Settings } from 'lucide-react';
@@ -43,6 +44,10 @@ function SectionHeader({ title, faint }: { title: string; faint: string }) {
 }
 
 export default function IndexPage(): JSX.Element {
+  const router = useRouter();
+  const basePath = router.basePath || '';
+  const imgPath = (path: string) => `${basePath}${path}`;
+
   const [activeSection, setActiveSection] = useState<string>('home');
   const [filter, setFilter] = useState<'All' | 'Accounting Efficiency' | 'Financial Reporting' | 'Bookkeeping'>('All');
   const [activeProject, setActiveProject] = useState<number | null>(null);
@@ -254,7 +259,7 @@ export default function IndexPage(): JSX.Element {
 
       <aside className="fixed top-0 left-0 h-full w-60 bg-gray-900 text-gray-100 flex flex-col items-center py-10 z-50">
         <img
-          src="/profile.jpg"
+          src={imgPath("/profile.jpg")}
           alt="Greig Colliar"
           className="w-40 h-40 rounded-full object-cover border-4 border-gray-800"
         />
@@ -442,7 +447,7 @@ export default function IndexPage(): JSX.Element {
             className="flex flex-col items-center text-center group transition-all duration-300"
           >
             <img
-              src={cert.icon}
+              src={imgPath(cert.icon)}
               alt={cert.name}
               className="h-12 w-auto mb-2 opacity-80 group-hover:opacity-100 transition-opacity duration-300"
             />
@@ -636,7 +641,7 @@ export default function IndexPage(): JSX.Element {
                     {/* use .portfolio-img wrapper so CSS selectors apply */}
                     <div className="portfolio-img">
                       <img
-                        src={p.img}
+                        src={imgPath(p.img)}
                         alt={p.title}
                         className="img-fluid d-block w-full"
                         draggable={false}
@@ -698,7 +703,7 @@ export default function IndexPage(): JSX.Element {
                       {project.images.map((img, index) => (
                         <img
                           key={index}
-                          src={img}
+                          src={imgPath(img)}
                           alt={`${project.title} ${index + 1}`}
                           className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1200ms] ease-in-out ${
                             index === activeImage ? "opacity-100" : "opacity-0"
@@ -891,7 +896,7 @@ export default function IndexPage(): JSX.Element {
         className="relative flex items-center justify-center group"
       >
         <img
-          src={logo}
+          src={imgPath(logo)}
           alt={`Company logo ${i + 1}`}
           className="h-10 w-auto object-contain opacity-80 group-hover:opacity-100 transition-all duration-300"
         />

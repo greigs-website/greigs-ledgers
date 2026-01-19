@@ -2,6 +2,7 @@ import Head from 'next/head';
 import Typing from 'react-typing-effect';
 import { motion } from 'framer-motion';
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { Linkedin, Github, Twitter, Mail, MapPin } from 'lucide-react';
 import { BookOpen, Wallet, FileText, Monitor, BarChart3, Settings } from 'lucide-react';
 import { Swiper, SwiperSlide } from 'swiper/react';
@@ -39,6 +40,10 @@ function SectionHeader({ title, faint }: { title: string; faint: string }) {
 }
 
 export default function IndexPage(): JSX.Element {
+  const router = useRouter();
+  const basePath = router.basePath || '';
+  const imgPath = (path: string) => `${basePath}${path}`;
+
   const [activeSection, setActiveSection] = useState<string>('home');
   const [filter, setFilter] = useState<'All' | 'Accounting' | 'IT'>('All');
 
@@ -118,7 +123,7 @@ export default function IndexPage(): JSX.Element {
       <aside className="fixed top-0 left-0 h-full w-60 bg-gray-900 text-gray-100 flex flex-col items-center py-10 z-50">
         {/* Profile picture */}
         <img
-          src="/profile.jpg"
+          src={imgPath("/profile.jpg")}
           alt="Greig Colliar"
           className="w-40 h-40 rounded-full object-cover border-4 border-gray-800"
         />
@@ -390,7 +395,7 @@ export default function IndexPage(): JSX.Element {
                   className="group relative overflow-hidden rounded-lg shadow-lg"
                 >
                   <img
-                    src={p.img}
+                    src={imgPath(p.img)}
                     alt={p.title}
                     className="w-full h-60 object-cover transform group-hover:scale-110 transition-transform duration-500"
                   />
